@@ -1,0 +1,247 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kasoti</title>
+<style>:root{--bg:#f4f0ea;--fg:#1d1a17;--card:#fff;--mut:#6b6158;--ac:#d9480f;--ok:#2b8a3e;--no:#c92a2a;--bd:#e4dacd;--skh:#e8590c;--kph:#3b5bdb;--s2:#f1ece5}
+@media(prefers-color-scheme:dark){:root{--bg:#131010;--fg:#f6f0e9;--card:#1f1a17;--mut:#b3a498;--ac:#ff8a4c;--ok:#51cf66;--no:#ff6b6b;--bd:#3a312b;--s2:#2a231f}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+main{padding:20px 16px 110px}.page{max-width:720px;margin:0 auto}.stack>*{margin-bottom:24px}
+h1{margin:.1em 0 .2em;font-size:2.4rem;letter-spacing:-.5px}h1 span{color:var(--ac)}h2{margin:0 0 14px;font-size:1.4rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:24px;box-shadow:0 2px 10px #0000000d}
+input,select,button{font:inherit;min-height:50px;padding:10px 18px;border-radius:14px;border:2px solid var(--bd);background:var(--bg);color:var(--fg);max-width:100%}
+input:focus,select:focus{outline:3px solid color-mix(in srgb,var(--ac) 50%,transparent);border-color:var(--ac)}
+button{cursor:pointer;background:var(--ac);color:#fff;border:0;font-weight:700;transition:transform .1s,filter .15s}button:hover{filter:brightness(1.08)}button:active{transform:scale(.96)}
+button.g{background:var(--s2);color:var(--fg);border:2px solid var(--bd)}button.y{background:var(--ok)}button.n{background:var(--no)}button.sm{min-height:40px;padding:4px 14px;font-size:.95rem}button.lg{min-height:62px;font-size:1.25rem;padding:12px 32px}button:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.row>input{flex:1;min-width:160px}.mut{color:var(--mut);font-size:1rem}label{display:flex;flex-direction:column;gap:6px;font-weight:600}.full{width:100%}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;background:var(--s2);border:2px solid var(--bd);font-size:1rem;font-weight:700}
+.pill.sk{background:var(--skh);border-color:var(--skh);color:#fff}.pill.kp{background:var(--kph);border-color:var(--kph);color:#fff}.pill.warn{background:var(--no);color:#fff;border-color:var(--no);animation:pulse 1s infinite}
+.top{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+.now{border-left:8px solid var(--ac);font-size:1.25rem;font-weight:700}.timer{font-size:1.8rem}
+.bar{height:12px;border-radius:99px;background:var(--s2);overflow:hidden;margin:14px 0 6px}.bar>i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.tc{padding:0;overflow:hidden;border:3px solid var(--bd)}.tc.sk{border-color:var(--skh);background:color-mix(in srgb,var(--skh) 8%,var(--card))}.tc.kp{border-color:var(--kph);background:color-mix(in srgb,var(--kph) 8%,var(--card))}
+.tc .th{padding:18px 24px;color:#fff;display:flex;gap:14px;align-items:center}.tc.sk .th{background:var(--skh)}.tc.kp .th{background:var(--kph)}.th .e{font-size:2.4rem}.th .tn{font-size:1.5rem;font-weight:800}.th .mut{color:#ffffffdd}
+.tc .tb{padding:8px 24px 22px}.tc.pick{cursor:pointer}.tc.sel{outline:5px solid var(--ac)}
+.mem{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--bd)}.mem:first-child{border-top:0}.mem .mn{flex:1;font-weight:600;min-width:120px}
+.av{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;color:#fff}.sk .av{background:var(--skh)}.kp .av{background:var(--kph)}
+.badge{padding:2px 12px;border-radius:99px;background:var(--card);border:2px solid currentColor;font-size:.95rem;font-weight:700}.sk .badge{color:var(--skh)}.kp .badge{color:var(--kph)}
+.q{display:flex;flex-direction:column;gap:8px;padding:16px;margin:12px 0;border-radius:16px;background:var(--s2)}.q .a{align-self:flex-end}.q .by{color:var(--mut);font-weight:600}
+.a-Yes,.a-No{padding:4px 18px;border-radius:99px;color:#fff;font-weight:800;font-size:1.1rem}.a-Yes{background:var(--ok)}.a-No{background:var(--no)}
+.hint{border-left:6px solid #f59f00;background:var(--card);padding:10px 14px;border-radius:12px}
+.res{text-align:center;border-width:3px;padding:36px 24px}.res.win{border-color:var(--ok);animation:pop .5s}.res.lose{border-color:var(--no)}.big{font-size:2.8rem;font-weight:800;line-height:1.2}.win .big{color:var(--ok)}.lose .big{color:var(--no)}
+.reveal{font-size:2.4rem;font-weight:800;margin:10px 0;letter-spacing:2px;color:var(--ac)}.reveal span{display:inline-block;animation:flip .6s both}
+.cd{text-align:center;padding:48px 24px}.cd .num{font-size:7rem;font-weight:900;color:var(--ac);line-height:1;animation:pulse 1s infinite}
+.ov{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:40;padding:16px;animation:fade .15s}.modal{width:min(540px,100%);max-height:92vh;overflow:auto;background:var(--card);border-radius:22px;padding:28px;box-shadow:0 16px 60px #0008}
+.modal h2{display:flex;justify-content:space-between;align-items:center}.code{font-size:3.2rem;font-weight:900;letter-spacing:8px;text-align:center;color:var(--ac);margin:8px 0 16px}
+.chatwin{position:fixed;right:20px;bottom:96px;width:400px;height:min(72vh,600px);display:none;flex-direction:column;background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:16px;box-shadow:0 12px 44px #0006;z-index:25}.chatwin.open{display:flex;animation:up .2s}
+.chead{display:flex;gap:8px;align-items:center}.tabs{display:flex;gap:8px;flex:1}.tabs button{flex:1;min-height:44px;padding:6px 10px}
+.bdg{display:inline-block;min-width:22px;padding:0 7px;border-radius:99px;background:var(--no);color:#fff;font-size:.9rem;font-style:normal;margin-left:6px}
+.cb{flex:1;overflow:auto;margin:12px 0;display:flex;flex-direction:column;gap:10px}
+.m{max-width:90%;padding:10px 14px;border-radius:16px;background:var(--s2);align-self:flex-start;word-break:break-word}.m.me{align-self:flex-end;background:color-mix(in srgb,var(--ac) 22%,var(--card))}.m small{display:block;color:var(--mut);font-weight:700;font-size:.9rem}
+.rx{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}.rb{min-height:32px;padding:0 9px;background:var(--card);color:var(--fg);font-weight:400;font-size:1rem;border:1px solid var(--bd);opacity:.65}.rb:hover,.rb.on{opacity:1}.rb.on{border-color:var(--ac)}.rb.pop{animation:pop .45s}
+.fl{position:absolute;bottom:80px;font-size:2.2rem;pointer-events:none;animation:fl 1.8s ease-out forwards;z-index:30}
+.toast{position:fixed;top:16px;right:16px;max-width:340px;background:var(--fg);color:var(--bg);padding:12px 16px;border-radius:14px;box-shadow:0 6px 24px #0005;z-index:60;cursor:pointer;animation:slide .3s}
+.fab{display:flex;position:fixed;right:20px;bottom:20px;width:64px;height:64px;border-radius:50%;font-size:1.8rem;z-index:26;box-shadow:0 4px 16px #0005;padding:0;align-items:center;justify-content:center}
+@keyframes fl{0%{transform:translateY(0) scale(.6);opacity:1}100%{transform:translateY(-240px) scale(1.5) rotate(15deg);opacity:0}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}@keyframes pulse{50%{opacity:.65}}@keyframes slide{from{transform:translateX(120%)}}@keyframes flip{from{transform:rotateX(90deg) scale(.5);opacity:0}}@keyframes fade{from{opacity:0}}@keyframes up{from{transform:translateY(20px);opacity:0}}
+.page.wide{max-width:1080px}.play{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}.rost{position:sticky;top:16px}@media(max-width:860px){.play{grid-template-columns:1fr}.rost{position:static}}
+.rc{background:var(--card);border:1px solid var(--bd);border-top:6px solid var(--bd);border-radius:16px;padding:14px 16px;margin-bottom:16px}.rc.sk{border-top-color:var(--skh)}.rc.kp{border-top-color:var(--kph)}.rh{font-weight:800;font-size:1.1rem;margin-bottom:6px}.rh span{color:var(--mut);font-weight:600}
+.rm{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 0;font-weight:600}.rm .rn{flex:1;min-width:90px}.dot{width:12px;height:12px;border-radius:50%;background:var(--bd)}.sk .dot{background:var(--skh)}.kp .dot{background:var(--kph)}
+.ic{min-height:30px;padding:0 10px;font-size:.85rem;background:var(--s2);color:var(--fg);border:1px solid var(--bd)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;gap:8px;align-items:center;padding:10px 16px;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd);overflow-x:auto;white-space:nowrap}.nav h1{font-size:1.6rem;margin:0 8px 0 0}.nav .timer{margin-left:auto;font-size:1.2rem}.page.hasnav{padding-top:76px}
+.qbox{height:min(44vh,400px);overflow-y:auto;border:2px solid var(--bd);border-radius:16px;padding:4px 14px;background:var(--bg)}.qbox .q{background:var(--card);border:1px solid var(--bd)}.gq{border:2px solid var(--ok)!important}.gname{font-size:1.3rem;font-weight:800}.hq{border-left:6px solid #f59f00}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{min-height:34px;padding:2px 12px;font-size:.9rem;background:var(--card);color:var(--fg);border:2px solid var(--bd);border-radius:99px}
+.fxov{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:#000c;overflow:hidden;animation:fade .3s}.fxov canvas{position:absolute;inset:0;pointer-events:none}
+.fxcard{position:relative;z-index:2;background:var(--card);border-radius:28px;padding:36px 28px;text-align:center;max-width:540px;width:calc(100% - 32px);animation:zoom .6s cubic-bezier(.2,1.6,.4,1)}.fxw .fxcard{border:5px solid var(--ok)}.fxl .fxcard{border:5px solid var(--no);animation:zoom .6s,shake 1s .6s 2}
+.fxe{font-size:5.5rem;line-height:1}.fxw .fxe{animation:spin 1.2s,bounce 1s 1.2s infinite}.fxl .fxe{animation:wob 1.2s infinite}.fxt{font-size:2.8rem;font-weight:900;line-height:1.1;margin:8px 0}.fxw .fxt{color:var(--ok)}.fxl .fxt{color:var(--no)}
+.rain{position:absolute;top:-60px;font-size:2.4rem;animation:rain linear infinite}.pop-l,.pop-r{position:absolute;bottom:-10px;font-size:5rem;z-index:3;animation:popper 1.3s ease-out both}.pop-l{left:6%}.pop-r{right:6%;animation-delay:.25s}
+@keyframes zoom{from{transform:scale(.3);opacity:0}}@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-14px) rotate(-2deg)}40%{transform:translateX(14px) rotate(2deg)}60%{transform:translateX(-10px)}80%{transform:translateX(10px)}}@keyframes spin{from{transform:rotate(-360deg) scale(.2)}}@keyframes bounce{50%{transform:translateY(-14px)}}@keyframes wob{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}@keyframes rain{to{transform:translateY(115vh) rotate(360deg)}}@keyframes popper{0%{transform:translateY(40px) scale(.4);opacity:0}30%{opacity:1}60%{transform:translateY(-55vh) rotate(-20deg) scale(1.4)}100%{transform:translateY(-70vh) scale(1.6);opacity:0}}
+.alertb{position:fixed;top:84px;left:50%;transform:translateX(-50%);z-index:70;max-width:min(92vw,520px);background:#f59f00;color:#1d1a17;font-weight:800;font-size:1.15rem;padding:14px 20px;border-radius:18px;box-shadow:0 8px 30px #0006;text-align:center;animation:drop .5s cubic-bezier(.2,1.6,.4,1)}
+.rxpick{display:flex;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:4px 10px;margin-top:6px;box-shadow:0 4px 14px #0003;width:max-content;animation:up .15s}.rxpick button{background:none;font-size:1.5rem;min-height:38px;padding:0 4px;color:var(--fg)}
+.rb.add{opacity:.55;border-radius:99px}.typing{margin-top:12px;font-weight:600;color:var(--kph)}.typing .dots::after{content:'';animation:dots 1.2s steps(4) infinite}
+@keyframes drop{from{transform:translate(-50%,-140%)}}@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+@media(max-width:600px){.chatwin{right:0;left:0;bottom:0;width:auto;height:80vh;border-radius:22px 22px 0 0}.fab.on{display:none}h1{font-size:2rem}}
+</style></head><body><main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const get=k=>{try{return localStorage.getItem(k)||''}catch(e){return ''}},set=(k,v)=>{try{v?localStorage.setItem(k,v):localStorage.removeItem(k)}catch(e){}};
+let S=null,ws,err='',myname='',tick;
+const pre=(location.hash||'').slice(1).toUpperCase();
+let home=pre?'join':null;
+const fmt=ms=>{const s=Math.ceil(Math.max(0,ms)/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const tx=o=>ws&&ws.readyState===1&&ws.send(JSON.stringify(o));
+function conn(){
+  ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host);
+  ws.onopen=()=>{try{const o=JSON.parse(sessionStorage.getItem('kgame')||'null');if(o)tx({t:'join',code:o.c,pid:o.p,name:o.n})}catch(e){}};
+  ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.t==='peek'){peek=m;err='';return draw()}
+    if(m.t==='closed'||m.t==='kicked'||m.t==='left')return resetHome(m.t==='closed'?m.e:m.t==='kicked'?'You were removed from the game by the host.':'')
+    if(m.t==='state'){track(S,m);S=m;err='';try{sessionStorage.setItem('kgame',JSON.stringify({c:m.code,p:m.you,n:myname}))}catch(x){}}
+    else{err=m.e;scrollTo({top:0,behavior:'smooth'});if(m.gone)try{sessionStorage.removeItem('kgame')}catch(x){}}
+    draw()};
+  ws.onclose=()=>setTimeout(conn,1500);
+}
+const goHome=m=>{home=m;err='';peek=null;draw()};
+const createGame=()=>{myname=$('#hn').value.trim()||'Host';tx({t:'create',name:myname})};
+const EMO=['👍','😂','😮','👏','🔥','❤️'];
+let peek=null,pick=null,ctab='g',chatOpen=false,modal=null,seen={g:0,t:0},unread={g:0,t:0},prevRx={},popKeys=new Set(),pendFloat=[];
+const findGame=()=>{myname=$('#gn').value.trim();const c=$('#gc').value.trim();if(!myname||!c){err='Enter your name and the game code.';return draw()}err='';pick=null;tx({t:'peek',code:c})};
+const doJoin=()=>{if(!pick){err='Pick a team first.';return draw()}err='';tx({t:'join',code:peek.code,name:myname,team:pick})};
+const backHome=()=>{peek=null;pick=null;err='';draw()};
+const team=(pid,t)=>tx({t:'team',pid,team:t});
+const val=id=>$('#'+id).value;
+const start=()=>tx({t:'start'});
+const saveRules=()=>{tx({t:'rules',asking:val('r_a'),rules:{maxQ:val('r_q'),limit:val('r_l')}});modal=null;draw()};
+const saveSecret=()=>{tx({t:'secret',secret:val('sec')});$('#sec').value=''};
+const confirmTeam=()=>tx({t:'confirm'});
+const HINTS=[['Real person or place?','Try asking whether it is a real person or a place.'],['Which region?','Try asking which continent or region it is connected to.'],['Which era?','Try asking which era or time period it belongs to.'],['Alive / standing today?','Try asking whether it is alive or still standing today.'],['Which field?','Try asking what field it is known for: sports, politics, art, science…']];
+const fillHint=(i,k)=>{const el=$('#hr_'+i);if(el)el.value=HINTS[k][1]};
+const verdict=(i,ok)=>tx({t:'verdict',i,ok});
+let resClosed=false,fxRaf=0;
+function sfx(win){try{const a=new (window.AudioContext||window.webkitAudioContext)();(win?[523,659,784,1047]:[392,370,349,294]).forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain();o.type=win?'triangle':'sawtooth';o.frequency.value=f;g.gain.value=.05;o.connect(g);g.connect(a.destination);o.start(a.currentTime+i*.18);o.stop(a.currentTime+i*.18+.16)})}catch(e){}}
+function stopFx(){cancelAnimationFrame(fxRaf);const o=$('#fx');if(o)o.remove()}
+const closeFx=()=>{resClosed=true;stopFx()};
+function confetti(cv){const c=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const cols=['#ff6b6b','#ffd43b','#51cf66','#4dabf7','#da77f2','#ff922b'];
+  const P=Array.from({length:170},()=>({x:Math.random()*cv.width,y:-Math.random()*cv.height*.7,w:6+Math.random()*8,h:10+Math.random()*10,c:cols[Math.random()*6|0],vy:2+Math.random()*4,vx:-2+Math.random()*4,r:Math.random()*6,vr:-.2+Math.random()*.4}));
+  const t0=performance.now();(function f(t){c.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(p.y>cv.height&&t-t0<6000){p.y=-20;p.x=Math.random()*cv.width}c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.fillRect(-p.w/2,-p.h/2,p.w,p.h);c.restore()});if(t-t0<9000)fxRaf=requestAnimationFrame(f)})(t0)}
+function syncResult(){
+  if(!S||S.phase!=='ended'){resClosed=false;if($('#fx'))stopFx();return}
+  if(resClosed||$('#fx'))return;
+  const r=S.result,mine=S.players.find(p=>p.id===S.you)||{},mt=mine.team,win=!!mt&&mt===r.winner,lose=!!mt&&mt!==r.winner;
+  const quotes=['Better luck next time 🤡','Even the Keepers feel a little bad… a little 😏','It’s not you, it’s the riddle 💀','Oof. That one hurt 🫠','Back to detective school 🕵️'];
+  const why={time:'Time ran out ⏰',questions:'All the questions were used up',host:'The host ended the round',wrong:`${esc(r.by||'The Seekers')} guessed wrong 😬`,guessed:`${esc(r.by||'The Seekers')} cracked it! 🔍`}[r.why]||'';
+  const rain=lose?Array.from({length:24},(_,i)=>`<span class="rain" style="left:${Math.random()*100}%;animation-delay:${Math.random()*2.5}s;animation-duration:${2.5+Math.random()*2}s">${['😭','🤡','💀','🥲','😵'][i%5]}</span>`).join(''):'';
+  const o=document.createElement('div');o.id='fx';o.className='fxov '+(win?'fxw':lose?'fxl':'fxn');
+  o.innerHTML=`${lose?'':'<canvas id="cf"></canvas>'}${rain}${lose?'':'<span class="pop-l">🎉</span><span class="pop-r">🎊</span>'}<div class="fxcard"><div class="fxe">${win?'🏆':lose?'😭':(r.seekers?'🔍':'🎭')}</div><div class="fxt">${win?'You Won!':lose?'You Lost':(r.seekers?'The Seekers win!':'The Keepers win!')}</div><p class="mut" style="margin:0 0 14px">${why}<br>${win?'Amazing teamwork! 🎉':lose?quotes[Math.random()*quotes.length|0]:''}</p><div class="mut">The secret was</div><div class="reveal">${[...r.name].map((c,i)=>`<span style="animation-delay:${.5+i*.07}s">${c===' '?'&nbsp;':esc(c)}</span>`).join('')}</div>
+    <div class="row" style="justify-content:center;margin-top:12px">${S.host?`<button class="lg" onclick="next(false)">New game · swap sides</button><button class="g" onclick="next(true)">New game · shuffle teams</button>`:'<span class="mut">Waiting for the host to start a new game…</span>'}<button class="g" onclick="closeFx()">Close</button></div></div>`;
+  document.body.appendChild(o);const cv=$('#cf');if(cv)confetti(cv);sfx(!lose);
+}
+let rxOpen=null,showSec=false,secTimer=0,typOn=false,typAt=0,alKey='',alDone=0;
+const resetHome=msg=>{S=null;peek=null;home=null;modal=null;chatOpen=false;try{sessionStorage.removeItem('kgame')}catch(x){}stopFx();err=msg||'';draw()};
+const leaveGame=()=>{if(confirm(S.host?'You are the host — leaving ends the game for everyone. Continue?':'Leave this game?'))tx({t:'leave'})};
+const endGame=()=>{if(confirm('End the game for everyone?'))tx({t:'endgame'})};
+const kick=pid=>{if(confirm('Remove this player from the game?'))tx({t:'kick',pid})};
+const toggleSec=()=>{showSec=!showSec;clearTimeout(secTimer);if(showSec)secTimer=setTimeout(()=>{showSec=false;draw()},8000);draw()};
+const secView=()=>`<b>${showSec?esc(S.secret):'••••••••'}</b> <button class="g sm" onclick="toggleSec()">${showSec?'🙈 Hide':'👁 View'}</button>`;
+const typing=on=>{const now=Date.now();if(on){if(!typOn||now-typAt>2000){tx({t:'typing',on:true});typOn=true;typAt=now}}else if(typOn){tx({t:'typing',on:false});typOn=false}};
+document.addEventListener('input',e=>{if(e.target.id==='qi'||e.target.id==='gi')typing(e.target.value.trim().length>0)});
+setInterval(()=>{if(!S||S.phase!=='playing'||S.asker!==S.you)return;const v=($('#qi')&&$('#qi').value.trim())||($('#gi')&&$('#gi').value.trim());if(v){tx({t:'typing',on:true});typOn=true;typAt=Date.now()}else typing(false)},2000);
+const FUN=['🐢 5 minutes gone! Seekers, even a snail would have a guess by now.','☕ 10 minutes! The Keepers are sipping tea, totally relaxed 😌','🦖 15 minutes! Dinosaurs went extinct faster than this game is moving.','😴 20 minutes… is everyone still awake?','🎂 25 minutes! You could have baked a cake by now.'];
+function timeAlert(){if(!S||S.phase!=='playing')return;const key=S.round+':'+S.endsAt,el=S.rules.limit*60000-(S.endsAt-Date.now()),k=Math.floor(el/300000);
+  if(key!==alKey){alKey=key;alDone=k;return}
+  if(k>alDone&&k>=1){alDone=k;const b=document.createElement('div');b.className='alertb';b.textContent=FUN[k-1]||`🕰️ ${k*5} minutes! At this point it's a lifestyle, not a game 😅`;document.body.appendChild(b);beep();setTimeout(()=>b.remove(),6500)}}
+const openModal=m=>{modal=m;draw()},closeModal=()=>{modal=null;draw()};
+const ans=(i,a)=>tx({t:'ans',i,a});
+const ask=()=>{const v=$('#qi').value.trim();if(v){tx({t:'ask',text:v});$('#qi').value='';typOn=false}};
+const guess=()=>{const v=$('#gi').value.trim();if(v){tx({t:'guess',text:v});$('#gi').value='';typOn=false}};
+const hint=i=>tx({t:'hintreply',i,text:$('#hr_'+i).value});
+const next=sh=>tx({t:'next',shuffle:sh});
+const chat=()=>{const v=$('#ci').value.trim();if(v){tx({t:'chat',scope:ctab,text:v});$('#ci').value=''}};
+const react=(scope,id,e)=>tx({t:'react',scope,id,e});
+const link=()=>location.origin+'/#'+S.code;
+const copy=b=>{try{navigator.clipboard.writeText(link());b.textContent='Copied ✓'}catch(e){$('#lk').select()}};
+const share=()=>navigator.share?navigator.share({title:'Kasoti',text:'Join my Kasoti game!',url:link()}):copy($('#cpy'));
+const sel=(id,opts,cur)=>`<select id="${id}">${opts.map(([v,l])=>`<option value="${v}"${String(v)===String(cur)?' selected':''}>${l}</option>`).join('')}</select>`;
+const isOpen=()=>chatOpen;
+const setTab=k=>{ctab=k;unread[k]=0;draw()};
+const toggleChat=()=>{chatOpen=!chatOpen;if(chatOpen)unread[ctab]=0;draw()};
+document.addEventListener('keydown',e=>{if(e.key==='Enter')({ci:chat,qi:ask,gi:guess,hn:createGame,gn:findGame,gc:findGame})[e.target.id]?.();if(e.key==='Escape'&&modal)closeModal()});
+function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.04;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.09)}catch(e){}}
+function toast(k,x){const d=document.createElement('div');d.className='toast';d.textContent=(k==='t'?'🔒 Team · ':'🌍 ')+x.by+': '+x.text.slice(0,70);d.onclick=()=>{chatOpen=true;ctab=k;unread[k]=0;d.remove();draw()};document.body.appendChild(d);setTimeout(()=>d.remove(),4200)}
+function track(old,m){
+  const first=!old;
+  [['g',m.chat],['t',m.tchat]].forEach(([k,l])=>{
+    l.forEach(x=>{if(x.id>seen[k]&&!first&&x.pid!==m.you&&!(isOpen()&&ctab===k)){unread[k]++;toast(k,x);beep()}});
+    seen[k]=Math.max(seen[k],l.reduce((a,x)=>Math.max(a,x.id),0))});
+  const cur=[];[['g',m.chat],['t',m.tchat]].forEach(([k,l])=>l.forEach(x=>{for(const e in x.rx)cur.push([k+':'+x.id+':'+e,e,x.rx[e].length])}));
+  if(!first)cur.forEach(([key,e,n])=>{if(n>(prevRx[key]||0)){popKeys.add(key);if(isOpen()&&key[0]===ctab)pendFloat.push(e)}});
+  prevRx={};cur.forEach(([key,,n])=>prevRx[key]=n);
+}
+function floats(){const s=$('#side');if(!s)return;pendFloat.splice(0).forEach(e=>{const f=document.createElement('span');f.className='fl';f.textContent=e;f.style.left=(15+Math.random()*65)+'%';f.onanimationend=()=>f.remove();s.appendChild(f)});popKeys.clear()}
+const ini=n=>esc((n||'?').trim()[0]||'?').toUpperCase();
+const TEAM=g=>g?{n:'The Seekers',e:'🔍',c:'sk',d:'Ask questions and guess the hidden name'}:{n:'The Keepers',e:'🎭',c:'kp',d:'Hold the secret and answer Yes or No'};
+
+function draw(){
+  const ae=document.activeElement,fid=ae&&ae.id,fs=ae&&ae.selectionStart,keep={};
+  ['qi','gi','sec','hn','gn','gc','r_q','r_l','r_a','ci'].forEach(k=>{const el=$('#'+k);if(el&&el.value)keep[k]=el.value});
+  document.querySelectorAll('[id^=hr_]').forEach(el=>{if(el.value)keep[el.id]=el.value});
+  const qo=$('#qb'),qNear=qo?qo.scrollHeight-qo.scrollTop-qo.clientHeight<60:true,qTop=qo?qo.scrollTop:0;
+  const e=err?`<div class="card" style="border:3px solid var(--no)">⚠️ ${esc(err)}</div>`:'';
+  if(!S){
+    let body;
+    if(!home)body=`<div class="card"><h2>What would you like to do?</h2><div class="stack" style="margin:0"><button class="lg full" onclick="goHome('host')">🎮 Host a new game</button><button class="lg full g" onclick="goHome('join')">🔗 Join an existing game</button></div></div>`;
+    else if(home==='host')body=`<div class="card"><h2>Host a new game</h2><p class="mut">You'll get a game code and an invite link to share. You start as a Keeper, and you can switch teams before the game begins.</p><div class="row"><input id="hn" placeholder="Your name" value="${esc(myname)}"></div><div class="row" style="margin-top:16px"><button class="lg" onclick="createGame()">Create game</button><button class="g" onclick="goHome(null)">Back</button></div></div>`;
+    else if(peek){
+      const oth=t=>t==='A'?'B':'A',tm=t=>peek.players.filter(p=>p.team===t);
+      const tcard=t=>{const g=t===peek.asking,T=TEAM(g),L=tm(t);return `<div class="card tc pick ${T.c}${pick===t?' sel':''}" onclick="pick='${t}';draw()"><div class="th"><span class="e">${T.e}</span><div><div class="tn">${T.n}</div><div class="mut">${T.d}</div></div></div><div class="tb">${L.map(p=>`<div class="mem"><span class="av">${ini(p.name)}</span><span class="mn">${p.host?'👑 ':''}${esc(p.name)}</span></div>`).join('')||'<div class="mut" style="padding-top:12px">Nobody yet — be the first!</div>'}<div style="margin-top:12px"><b>${pick===t?'✅ Selected':'Tap to pick this team'}</b></div></div></div>`};
+      body=`<div class="card"><h2>Choose your team</h2><p class="mut">Hi <b>${esc(myname)}</b>! Round ${peek.round}. See who's on each side and pick one. You'll confirm it in the lobby — after that it's locked.</p></div>${tcard(peek.asking)}${tcard(oth(peek.asking))}<div class="row"><button class="lg" onclick="doJoin()"${pick?'':' disabled'}>Join game</button><button class="g" onclick="backHome()">Back</button></div>`;
+    }else body=`<div class="card"><h2>Join a game</h2><p class="mut">Enter your name and the game code from the host.</p><div class="row"><input id="gn" placeholder="Your name" value="${esc(myname)}"><input id="gc" placeholder="Game code" value="${esc(pre)}"></div><div class="row" style="margin-top:16px"><button class="lg" onclick="findGame()">Next: choose team</button><button class="g" onclick="goHome(null)">Back</button></div></div>`;
+    app.innerHTML=`<div class="page stack"><div><h1>Ka<span>soti</span></h1><p class="mut">A hidden name. Yes/no questions. Can the Seekers crack it before the Keepers win?</p></div>${e}${body}</div>`;
+  }else{
+    const host=S.host,mine=S.players.find(p=>p.id===S.you)||{},mt=mine.team,R=S.rules,lobby=S.phase==='lobby',cdn=S.phase==='countdown',play=S.phase==='playing',done=S.phase==='ended';
+    const onG=mt===S.asking,onA=!!mt&&!onG,amAsker=S.asker===S.you,amAns=S.answerer===S.you,oth=t=>t==='A'?'B':'A';
+    const nm=id=>(S.players.find(p=>p.id===id)||{}).name||'nobody yet';
+    const mem=t=>S.players.filter(p=>p.team===t);
+    const pend=S.log.filter(l=>!l.g&&!l.h&&!l.a).length,hs=S.log.filter(l=>l.h).length,busy=S.log.some(l=>!l.h&&!l.a);
+    let lastQ=-1;S.log.forEach((l,i)=>{if(!l.g&&!l.h)lastQ=i});
+    const nums=[];let n=0;S.log.forEach(l=>nums.push(l.g||l.h?'':(++n)+'. '));
+    const logRow=(l,i)=>l.h?`<div class="q hq"><span class="by">💡 ${esc(l.by)} asked for a hint</span>${l.r?`<div class="hint">💡 <b>${esc(l.r)}</b></div>`:l.s?'<span class="mut a">The Keepers passed</span>':amAns&&play?`<div class="chips">${HINTS.map((h,k)=>`<button class="chip" onclick="fillHint(${i},${k})">${esc(h[0])}</button>`).join('')}</div><div class="row"><input id="hr_${i}" placeholder="Tell them what to ask…"><button class="y sm" onclick="hint(${i})">Send hint</button><button class="g sm" onclick="tx({t:'hintskip',i:${i}})">Pass</button></div>`:'<span class="mut a">…waiting for the Keepers</span>'}</div>`
+      :l.g?`<div class="q gq"><span class="by">🎯 ${esc(l.by)} guessed</span><div class="gname">${esc(l.q)}</div>${l.a?`<span class="a a-${l.a}">${l.a==='Yes'?'Correct ✅':'Wrong ❌'}</span>`:amAns&&play?`<div class="row a"><span class="mut">Is this the secret?</span><button class="y" onclick="verdict(${i},true)">✅ Right</button><button class="n" onclick="verdict(${i},false)">❌ Wrong</button></div>`:'<span class="mut a">…the Keepers are deciding</span>'}</div>`
+      :`<div class="q"><span class="by">${nums[i]}${esc(l.by)}</span><div>${esc(l.q)}</div>${amAns&&play&&i===lastQ?`<div class="row a"><button class="${l.a==='Yes'?'y':'g'}" onclick="ans(${i},'Yes')">Yes</button><button class="${l.a==='No'?'n':'g'}" onclick="ans(${i},'No')">No</button></div>${l.a?'<span class="mut a">Picked the wrong one? Tap the other to change it.</span>':''}`
+        :l.a?`<span class="a a-${l.a}">${l.a}${l.ed?' (edited)':''}</span>`:'<span class="mut a">…waiting for an answer</span>'}</div>`;
+    const role=mt?(onG?'🔍 Seeker':'🎭 Keeper'):'Spectator';
+    const hostP=S.players.find(p=>p.id===S.hostId);
+    const nav=`<div class="nav"><h1>Ka<span>soti</span></h1><span class="pill">Code ${S.code}</span><span class="pill ${mt?(onG?'sk':'kp'):''}">${host?'👑 ':''}${role}</span><span class="pill">Round ${S.round}</span><span class="pill">🔍 ${S.score[S.asking]} – ${S.score[oth(S.asking)]} 🎭</span>${play?`<span class="pill timer" id="tp">⏱ <span id="t">${fmt(S.endsAt-Date.now())}</span></span>`:cdn?'<span class="pill timer">Get ready…</span>':''}<button class="g sm" style="${play||cdn?'':'margin-left:auto'}" onclick="openModal('menu')">☰ Menu</button></div>`;
+    const typingLine=S.typing&&!amAsker?`<div class="typing">✍️ <b>${esc(S.typing.by||'The questioner')}</b> is writing a question<span class="dots"></span><div class="mut" style="font-weight:400">Switching the questioner is locked until it's asked.</div></div>`:'';
+    let m='',page='page hasnav';
+    if(lobby){
+      const teamCard=t=>{
+        const g=t===S.asking,T=TEAM(g),L=mem(t);
+        const rows=L.map(p=>{const okp=p.ok||p.id===S.hostId,isR=g?S.asker===p.id:S.answerer===p.id,can=(host||mt===t)&&okp;
+          return `<div class="mem"><span class="av">${ini(p.name)}</span><span class="mn">${p.id===S.hostId?'👑 ':''}${esc(p.name)}${p.id===S.you?' <span class="mut">(you)</span>':''}</span><span title="${okp?'Team confirmed':'Not confirmed yet'}">${okp?'✅':'⏳'}</span>${isR?`<span class="badge">${g?'🎤 Questioner':'🎭 Answerer'}</span>`:''}${can&&!isR?`<button class="g sm" onclick="tx({t:'role',role:'${g?'asker':'answerer'}',pid:'${p.id}'})">${g?'Make questioner':'Make answerer'}</button>`:''}${host?`<button class="g sm" onclick="team('${p.id}','${oth(t)}')">Move ⇄</button>`:''}${host&&p.id!==S.you?`<button class="n sm" onclick="kick('${p.id}')">Remove</button>`:''}</div>`}).join('')||'<div class="mut" style="padding-top:12px">Nobody here yet.</div>';
+        return `<div class="card tc ${T.c}"><div class="th"><span class="e">${T.e}</span><div><div class="tn">${T.n} <span class="mut">· ${L.length}</span></div><div class="mut">${T.d}</div></div></div><div class="tb">${rows}</div></div>`};
+      m+=`<div class="card now">${host?'Review the teams, then start the game.':'Waiting for the host to start the game.'}<div class="mut" style="font-weight:400;margin-top:6px">${S.players.length} player${S.players.length===1?'':'s'} · 👑 ${esc(nm(S.hostId))}${hostP&&!hostP.team?' (moderating)':''}<br>${R.maxQ} questions · ${R.limit} min · 3 hints (after 10 questions) · one question at a time</div>
+        ${host?`<div class="row" style="margin-top:18px"><button class="g" onclick="openModal('invite')">🔗 Invite</button><button class="g" onclick="openModal('rules')">⚙️ Rules</button><button class="g" onclick="tx({t:'shuffle'})">🔀 Shuffle</button>${mt?`<button class="g" onclick="team('${S.you}',null)">Go neutral</button>`:''}</div><div style="margin-top:16px"><button class="lg full" onclick="start()">▶ Start round ${S.round}</button></div>`:''}</div>`;
+      if(host&&mt){const T=TEAM(onG);m+=`<div class="card tc ${T.c}"><div class="th"><span class="e">${T.e}</span><div><div class="tn">You're hosting as ${T.n}</div><div class="mut">Hosts start as Keepers</div></div></div><div class="tb"><p>You can switch sides until the game starts.</p><div class="row"><button class="g" onclick="tx({t:'myteam',team:'${oth(mt)}'})">Switch to ${TEAM(!onG).n}</button></div></div></div>`}
+      else if(mt&&!mine.ok){const T=TEAM(onG);m+=`<div class="card tc ${T.c}"><div class="th"><span class="e">${T.e}</span><div><div class="tn">You're on ${T.n}</div><div class="mut">Confirm to lock it in</div></div></div><div class="tb"><p>After you confirm, you can't switch teams this round.</p><div class="row"><button class="lg" onclick="confirmTeam()">🔒 Confirm team</button><button class="g" onclick="tx({t:'myteam',team:'${oth(mt)}'})">Switch to ${TEAM(!onG).n}</button></div></div></div>`}
+      else if(mt&&!host)m+=`<div class="card" style="border-left:8px solid ${onG?'var(--skh)':'var(--kph)'}">✅ <b>Team locked:</b> you're ${onG?'a Seeker 🔍':'a Keeper 🎭'} this round.</div>`;
+      if(onA&&(mine.ok||host))m+=`<div class="card tc kp"><div class="th"><span class="e">🔒</span><div><div class="tn">Choose the secret name</div><div class="mut">Only the Keepers can see and set this</div></div></div><div class="tb"><p class="mut">A famous person, historical figure, building or landmark.</p><div class="row"><input id="sec" placeholder="e.g. Eiffel Tower"><button onclick="saveSecret()">Save</button></div>${S.secret?`<p style="margin:14px 0 0">✅ Saved: ${secView()}</p>`:'<p class="mut" style="margin:14px 0 0">No secret saved yet.</p>'}</div></div>`;
+      m+=`<div class="stack" style="margin:0">${teamCard(S.asking)}${teamCard(oth(S.asking))}</div>`;
+    }else{
+      page='page wide hasnav';
+      if(cdn)m+=`<div class="card cd"><div class="mut">Round ${S.round} starts in</div><div class="num" id="cd">${Math.max(0,Math.ceil((S.cdEnds-Date.now())/1000))}</div><p style="font-size:1.3rem"><b>${mt?(onG?'You are a Seeker 🔍':'You are a Keeper 🎭'):'Get ready'}</b><br><span class="mut">${onG?'Work with your team to find the hidden name.':onA?'Protect the secret. Answer honestly!':''}</span></p>${host?`<div class="row" style="justify-content:center"><button class="lg" onclick="tx({t:'skip'})">Skip ⏭</button><button class="g" onclick="tx({t:'cancel'})">Back to lobby</button></div>`:''}</div>`;
+      if(play){const now=amAsker?(busy?'⏳ Waiting for the Keepers…':'🎤 Your turn — ask your next question or make a guess.'):amAns?(busy?'🎭 Answer the pending question or guess.':'Waiting for the Seekers’ next question…'):onG?`${esc(nm(S.asker))} is asking. Suggest questions in team chat.`:onA?`${esc(nm(S.answerer))} is answering. Agree on Yes/No in team chat.`:'Watching the round…';
+        m+=`<div class="card now"><div>${now}</div><div class="bar"><i style="width:${S.used/R.maxQ*100}%"></i></div><div class="mut" style="font-weight:400">Question ${S.used}/${R.maxQ} · Hints ${hs}/3</div></div>`}
+      if(done){const r=S.result,won=mt&&mt===r.winner,lost=mt&&mt!==r.winner,why={time:'Time ran out.',questions:'All questions were used.',host:'The host ended the round.',wrong:'That guess was wrong.'}[r.why]||'';
+        m+=`<div class="card res ${won?'win':lost?'lose':''}"><div class="big">${won?'🏆 You Won!':lost?'😔 You Lost':(r.seekers?'🔍 The Seekers win!':'🎭 The Keepers win!')}</div><p style="font-size:1.2rem;margin:12px 0 0">${r.seekers?`<b>${esc(r.by||'The Seekers')}</b> guessed it!`:`The Seekers didn't find it. ${why}`}</p><div class="mut" style="margin-top:14px">🎭 The Keepers reveal the answer:</div><div class="reveal">${[...r.name].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c===' '?'&nbsp;':esc(c)}</span>`).join('')}</div>
+        ${host?`<div class="row" style="justify-content:center;margin-top:8px"><button class="lg" onclick="next(false)">New game · swap sides</button><button class="g" onclick="next(true)">New game · shuffle teams</button></div>`:'<p class="mut">Waiting for the host to start a new game…</p>'}</div>`}
+      if((play||cdn)&&S.secret)m+=`<div class="card" style="border-left:8px solid var(--kph)">🔒 Secret: ${secView()} <span class="mut">(only the Keepers see this)</span></div>`;
+      if(play||done){
+        m+=`<div class="card"><h2>Questions &amp; guesses</h2><div id="qb" class="qbox">${S.log.length?S.log.map(logRow).join(''):'<p class="mut" style="padding-top:12px">Nothing yet — the Seekers will start soon.</p>'}</div>${typingLine}</div>`;
+        if(play&&amAsker&&onG){const hOk=S.used>=10&&hs<3&&!S.log.some(l=>l.h&&!l.r&&!l.s);m+=`<div class="card"><h2>Your turn</h2><div class="row"><input id="qi" maxlength="160" placeholder="${busy?'Waiting for the Keepers…':'Ask a yes/no question'}"${busy?' disabled':''}><button onclick="ask()"${busy?' disabled':''}>Ask</button></div><div class="row" style="margin-top:14px"><input id="gi" placeholder="Think you know? Type your final guess"${busy?' disabled':''}><button class="y" onclick="guess()"${busy?' disabled':''}>Guess</button></div><div class="row" style="margin-top:16px"><button class="g sm" onclick="tx({t:'hint'})"${hOk?'':' disabled'}>💡 ${S.used<10?`Hints unlock after 10 questions (${S.used}/10)`:`Ask for a hint (${3-hs} left)`}</button></div><p class="mut" style="margin:10px 0 0">One question at a time. A guess is final: the Keepers say if it's right. A wrong guess ends the round.</p></div>`}
+        if(host&&play)m+=`<div class="card row"><span class="mut" style="flex:1">Host controls</span><button class="g sm" onclick="tx({t:'end'})">Reveal &amp; end round</button></div>`;
+      }
+    }
+    // side roster for the game phases
+    const rc=t=>{const g=t===S.asking,T=TEAM(g),L=mem(t),can=(host||mt===t)&&!done;
+      return `<div class="rc ${T.c}"><div class="rh">${T.e} ${T.n} <span>${L.length}</span></div>${L.map(p=>{const isR=g?S.asker===p.id:S.answerer===p.id;
+        return `<div class="rm"><span class="dot"></span><span class="rn">${p.id===S.hostId?'👑 ':''}${esc(p.name)}${p.id===S.you?' (you)':''}</span>${isR?`<span class="badge">${g?'🎤 asking':'🎭 answering'}</span>`:''}${can&&!isR?`<button class="ic"${g&&S.typing?' disabled':''} onclick="tx({t:'role',role:'${g?'asker':'answerer'}',pid:'${p.id}'})">${g?'Set asker':'Set answerer'}</button>`:''}${host&&p.id!==S.you?`<button class="ic" title="Remove player" onclick="kick('${p.id}')">✕</button>`:''}</div>`}).join('')||'<div class="mut">Nobody</div>'}</div>`};
+    const body=lobby?`<div class="stack">${m}</div>`:`<div class="play"><div class="stack">${m}</div><aside class="rost"><div class="mut" style="font-weight:700;margin-bottom:8px">👥 PLAYERS · ${S.players.length}</div>${rc(S.asking)}${rc(oth(S.asking))}</aside></div>`;
+    if(isOpen())unread[ctab]=0;
+    if(!mt&&ctab==='t')ctab='g';
+    const list=ctab==='t'?S.tchat:S.chat;
+    const msgs=list.map(x=>{const k=ctab+':'+x.id;return `<div class="m${x.pid===S.you?' me':''}" ondblclick="react('${ctab}',${x.id},'❤️')"><small>${esc(x.by)}</small>${esc(x.text)}<div class="rx">${Object.keys(x.rx).map(em=>{const a=x.rx[em];return `<button class="rb${a.includes(S.you)?' on':''}${popKeys.has(k+':'+em)?' pop':''}" onclick="react('${ctab}',${x.id},'${em}')">${em} ${a.length}</button>`}).join('')}<button class="rb add" title="React" onclick="rxOpen=rxOpen==='${k}'?null:'${k}';draw()">☺</button></div>${rxOpen===k?`<div class="rxpick">${EMO.map(em=>`<button onclick="react('${ctab}',${x.id},'${em}');rxOpen=null">${em}</button>`).join('')}</div>`:''}</div>`}).join('')||'<span class="mut">No messages yet. Say hi 👋</span>';
+    const c=`<div class="chead"><div class="tabs"><button class="${ctab==='g'?'':'g'}" onclick="setTab('g')">🌍 Everyone${unread.g?`<i class="bdg">${unread.g}</i>`:''}</button>${mt?`<button class="${ctab==='t'?'':'g'}" onclick="setTab('t')">🔒 My team${unread.t?`<i class="bdg">${unread.t}</i>`:''}</button>`:''}</div><button class="g sm" onclick="toggleChat()" title="Collapse chat">▾</button></div>
+      <div class="mut" style="margin-top:8px">${ctab==='t'?'Private — only your team sees this.':'Everyone in the game sees this.'}</div><div id="cb" class="cb">${msgs}</div><div class="row"><input id="ci" maxlength="300" placeholder="${ctab==='t'?'Message your team…':'Message everyone…'}"><button onclick="chat()">Send</button></div>`;
+    const tot=unread.g+unread.t;
+    let mod='';
+    if(modal==='invite')mod=`<div class="ov" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>Invite players <button class="g sm" onclick="closeModal()">✕</button></h2><p class="mut" style="text-align:center;margin:0">Game code</p><div class="code">${S.code}</div><div class="row"><input id="lk" readonly value="${esc(link())}" onclick="this.select()"><button id="cpy" onclick="copy(this)">Copy link</button></div><div class="row" style="margin-top:12px"><button class="g full" onclick="share()">📤 Share…</button></div><p class="mut">Anyone with the link can join — no account needed.</p></div></div>`;
+    if(modal==='rules')mod=`<div class="ov" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>Game rules <button class="g sm" onclick="closeModal()">✕</button></h2><div class="stack" style="margin:0"><label>Max questions ${sel('r_q',[[15,15],[20,20]],R.maxQ)}</label><label>Round time (minutes)<input id="r_l" type="number" min="1" max="60" value="${R.limit}"></label><label>The Seekers are<select id="r_a"><option value="A"${S.asking==='A'?' selected':''}>Team A</option><option value="B"${S.asking==='B'?' selected':''}>Team B</option></select></label></div><p class="mut">Hints: 3 per round, unlocked after 10 questions · A guess is final · One question at a time</p><button class="lg full" onclick="saveRules()">Save rules</button></div></div>`;
+    if(modal==='menu')mod=`<div class="ov" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>Game menu <button class="g sm" onclick="closeModal()">✕</button></h2><div class="stack" style="margin:0"><button class="lg full g" onclick="closeModal();leaveGame()">🚪 Leave game</button>${host?`<button class="lg full n" onclick="closeModal();endGame()">🛑 End game for everyone</button>`:''}</div>${host?'<p class="mut">Leaving as host also ends the game for everyone.</p>':''}</div></div>`;
+    app.innerHTML=`${nav}<div class="${page}">${e}${body}</div><div id="side" class="chatwin${chatOpen?' open':''}">${c}</div><button class="fab${chatOpen?' on':''}" onclick="toggleChat()" title="Chat">💬${tot?`<i class="bdg" style="position:absolute;top:-4px;right:-4px;margin:0">${tot}</i>`:''}</button>${mod}`;
+    const cb=$('#cb');if(cb)cb.scrollTop=cb.scrollHeight;const qb=$('#qb');if(qb)qb.scrollTop=qNear?qb.scrollHeight:qTop;floats();
+    document.title=(tot?'('+tot+') ':'')+'Kasoti';
+    syncResult();
+  }
+  for(const k in keep)if($('#'+k))$('#'+k).value=keep[k];
+  if(fid&&$('#'+fid)){const el=$('#'+fid);el.focus();try{el.setSelectionRange(fs,fs)}catch(x){}}
+}
+setInterval(()=>{if(!S)return;timeAlert();const t=$('#t');if(t&&S.phase==='playing'){const ms=S.endsAt-Date.now();t.textContent=fmt(ms);const p=$('#tp');if(p)p.classList.toggle('warn',ms<30000)}const cd=$('#cd');if(cd)cd.textContent=Math.max(0,Math.ceil((S.cdEnds-Date.now())/1000))},300);
+draw();conn();
+</script></body></html>
