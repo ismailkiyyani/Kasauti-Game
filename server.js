@@ -29,6 +29,7 @@ function fixRoles(r){if(r.asker&&r.players.get(r.asker)?.team!==r.asking)r.asker
 function shuffle(r){const ids=[...r.players.keys()].filter(i=>i!==r.host);for(let i=ids.length-1;i>0;i--){const j=crypto.randomInt(i+1);[ids[i],ids[j]]=[ids[j],ids[i]]}
   ids.forEach((id,i)=>{const p=r.players.get(id);p.team=i%2?'B':'A';p.ok=false});fixRoles(r)}
 
+const nextAsker=r=>{const L=[...r.players].filter(([,p])=>p.team===r.asking).map(([id])=>id);if(!L.length)return null;return L[(L.indexOf(r.asker)+1)%L.length]};
 const ensureRoles=r=>{if(r.phase==='lobby'||r.phase==='ended')return;if(!r.asker)r.asker=mem(r,r.asking)[0]||null;if(!r.answerer)r.answerer=mem(r,other(r.asking))[0]||null};
 const dropPlayer=(r,pid)=>{r.players.delete(pid);if(r.asker===pid)r.asker=null;if(r.answerer===pid)r.answerer=null;if(r.typing&&r.typing.pid===pid)r.typing=null;ensureRoles(r)};
 const closeRoom=(r,msg)=>{for(const [,p] of r.players){send(p.ws,{t:'closed',e:msg});if(p.ws)p.ws.room=null}rooms.delete(r.code)};
@@ -85,15 +86,16 @@ wss.on('connection',ws=>{
     else if(m.t==='confirm'&&r.phase==='lobby'&&me.team)me.ok=true;
     else if(m.t==='secret'&&r.phase==='lobby'&&me.team&&!asking&&(me.ok||host)){const s=String(m.secret||'').trim().slice(0,80);if(s)r.secret=s}
     else if(m.t==='role'&&r.phase!=='ended'&&r.players.has(m.pid)){const t=r.players.get(m.pid).team;
-      if(m.role==='asker'&&t===r.asking&&(host||asking)){if(r.typing&&r.typing.until>Date.now()&&r.asker!==m.pid)return send(ws,{t:'err',e:'The questioner is writing a question — wait until it has been asked.'});r.asker=m.pid}
+      if(m.role==='asker'&&t===r.asking&&host){if(r.typing&&r.typing.until>Date.now()&&r.asker!==m.pid)return send(ws,{t:'err',e:'The questioner is writing a question — wait until it has been asked.'});r.asker=m.pid}
       else if(m.role==='answerer'&&t&&t!==r.asking&&(host||(me.team&&!asking)))r.answerer=m.pid}
-    else if(playing&&pid===r.asker&&asking&&m.t==='ask'&&x&&used(r)<r.rules.maxQ&&!r.log.some(l=>!l.h&&!l.a)){r.typing=null;r.log.push({by:me.name,q:x.slice(0,160),a:null})}
+    else if(playing&&pid===r.asker&&asking&&m.t==='ask'&&x&&used(r)<r.rules.maxQ&&!r.log.some(l=>!l.h&&!l.a)){r.typing=null;r.log.push({by:me.name,q:x.slice(0,160),a:null});r.asker=nextAsker(r)}
     else if(playing&&pid===r.asker&&asking&&m.t==='guess'&&x&&!r.log.some(l=>!l.h&&!l.a)){r.typing=null;r.log.push({by:me.name,q:x.slice(0,80),a:null,g:1})}
     else if(playing&&pid===r.asker&&asking&&m.t==='hint'&&used(r)>=10&&r.log.filter(l=>l.h).length<3&&!r.log.some(l=>l.h&&!l.r&&!l.s))r.log.push({by:me.name,q:'💡 '+(x.slice(0,100)||'Can we get a hint?'),h:1});
     else if(playing&&pid===r.answerer&&m.t==='ans'&&r.log[m.i]&&!r.log[m.i].h&&!r.log[m.i].g&&(m.a==='Yes'||m.a==='No')&&!r.log.slice(m.i+1).some(l=>!l.g&&!l.h)){const l=r.log[m.i];if(l.a&&l.a!==m.a)l.ed=1;l.a=m.a;check(r)}
     else if(playing&&pid===r.answerer&&m.t==='verdict'&&r.log[m.i]&&r.log[m.i].g&&!r.log[m.i].a){const l=r.log[m.i],ok=!!m.ok;l.a=ok?'Yes':'No';end(r,ok,ok?'guessed':'wrong',l.by)}
     else if(playing&&pid===r.answerer&&(m.t==='hintreply'||m.t==='hintskip')&&r.log[m.i]&&r.log[m.i].h&&!r.log[m.i].r&&!r.log[m.i].s){
       if(m.t==='hintskip')r.log[m.i].s=1;else{if(!x)return;r.log[m.i].r=x.slice(0,160)}}
+    else if(m.t==='pass'&&playing&&pid===r.asker&&asking){r.typing=null;r.asker=nextAsker(r)}
     else if(m.t==='typing'&&playing&&pid===r.asker&&asking){r.typing=m.on?{pid,until:Date.now()+4000}:null}
     else if(m.t==='chat'&&x){const list=m.scope==='t'?(me.team&&r.tchat[me.team]):r.chat;
       if(list){list.push({id:++r.mid,by:me.name,pid,text:x,rx:{}});if(list.length>200)list.shift()}}
