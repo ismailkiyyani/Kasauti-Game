@@ -1,1 +1,13 @@
-{"name":"kasoti","version":"1.0.0","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"ws":"^8.18.0"},"engines":{"node":">=18"}}
+{
+  "name": "kasoti",
+  "version": "2.0.0",
+  "description": "Kasoti - a hidden-name guessing game (friends mode + offline AI keeper for India & Pakistan)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "validate": "node scripts/validate-data.js",
+    "test": "node scripts/validate-data.js && node --test"
+  },
+  "dependencies": { "ws": "^8.18.0" },
+  "engines": { "node": ">=18" }
+}
